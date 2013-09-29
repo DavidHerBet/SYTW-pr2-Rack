@@ -29,10 +29,6 @@ Instrucciones
 4. Una vez alli introducimos el usuario de Twitter y vemos su último tweet.
    
 
-**Notas:**
-
-- Si introduces un usuario de Twitter que no exista, se producirá un fallo interno en el servidor y te lo notificará.
-
 
 ---
 
