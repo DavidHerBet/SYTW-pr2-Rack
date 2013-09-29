@@ -9,14 +9,14 @@ class MuestraTweets
     res = Rack::Response.new 
     res['Content-Type'] = 'text/html'
     username = (req["user"] && req["user"] != '') ? req["user"] : ''
-    user_tweets = (!username.empty?) ? Twitter.user_timeline(username).first.text : "No se ha introducido ningún usuario"
+    user_tweets = (!username.empty?) ? usuario_registrado?(username) : "No se ha introducido ningún usuario"
 
     res.write <<-"EOS"
       <!DOCTYPE HTML>
       <html>
         <head>
           <meta charset="UTF-8">
-          <title>>App MuestraTweet</title>
+          <title>App MuestraTweet</title>
         </head>
         <body>
           <section>
@@ -37,6 +37,14 @@ class MuestraTweets
       </html>
     EOS
     res.finish
+  end
+
+  def usuario_registrado?(user)
+    begin
+      Twitter.user_timeline(user).first.text
+    rescue
+      "El usuario introducido no está registrado en Twitter"
+    end
   end
 end
 
