@@ -48,8 +48,11 @@ class MuestraTweets
   end
 end
 
+servidor = ARGV.shift || 'thin'
+puerto = ARGV.shift || '9292'
+
 Rack::Server.start(
   :app => MuestraTweets.new,
-  :Port => 9292,
-  :server => 'thin'
+  :Port => puerto,
+  :server => servidor
 )
