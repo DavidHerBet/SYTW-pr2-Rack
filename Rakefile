@@ -1,6 +1,6 @@
 task :default => :ntweets
 
-desc 'Ejecuta el servidor con las opciones por defecto '
+desc 'Ejecuta el servidor con las opciones por defecto'
 task :ntweets do
   sh "ruby muestra_tweets.rb"
 end
