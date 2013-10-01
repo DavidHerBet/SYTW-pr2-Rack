@@ -49,7 +49,7 @@ class MuestraTweets
     res.finish
   end
 
-  # Comprueba que el usuario esté registrado y, en ese caso, devuelva sus tweets
+  # Comprueba que el usuario esté registrado y, en ese caso, devuelve sus tweets
   def usuario_registrado?(user, iter)
   salida = String.new
     begin
