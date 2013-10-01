@@ -4,34 +4,44 @@ require './configure'
 
 class MuestraTweets
 
+  ORDEN = %w(Último Penúltimo Antepenúltimo)
+
   def call env
     req = Rack::Request.new(env)
     res = Rack::Response.new 
     res['Content-Type'] = 'text/html'
+    
+    # Recoge el nombre del usuario
     username = (req["user"] && req["user"] != '') ? req["user"] : ''
-    user_tweets = (!username.empty?) ? usuario_registrado?(username) : "No se ha introducido ningún usuario"
+
+    # Recoge el número introducido de tweets y si el rango es válido
+    tweets_number = (req["ntweets"] && (1..3) === req["ntweets"].to_i) ? req["ntweets"].to_i : 0
+
+    # Recoge los tweets del usuario introducido
+    user_tweets = (!username.empty? && !tweets_number.zero?) ? usuario_registrado?(username, tweets_number) : "No se ha introducido ningún usuario o no se ha introducido ningún número de tweets"
 
     res.write <<-"EOS"
       <!DOCTYPE HTML>
       <html>
         <head>
           <meta charset="UTF-8">
-          <title>App MuestraTweet</title>
+          <title>App MuestraTweets</title>
         </head>
         <body>
           <section>
             <h1>Bienvenidos a la aplicación MuestraTweet</h1>
-            <p>Introduciendo un usuario podremos ver su último tweet.</p>
+            <p>Introduciendo un usuario podremos ver sus últimos tweets. Para ello, siga estos pasos:</p>
 
             <form action="/" method="post">
-              Introduzca un usuario de Twitter <input type="text" name="user" autofocus><br>
-              <input type="submit" value="Mostrar último tweet">
+              1. Introduzca un usuario de Twitter <input type="text" name="user" autofocus><br>
+              2. Introduzca el número de tweets (entre 1 y 3): <input type="number" name="ntweets" min="1" max="3"><br>
+              <input type="submit" value="Mostrar últimos tweets"><br>
             </form>
           </section>
           
           <section>
-            <h2>Último tweet</h2>
-            #{username}<br>#{user_tweets}
+            <h2>Últimos tweets de #{username}</h2>
+            #{user_tweets}
           </section>
         </body>
       </html>
@@ -39,11 +49,16 @@ class MuestraTweets
     res.finish
   end
 
-  def usuario_registrado?(user)
+  # Comprueba que el usuario esté registrado y, en ese caso, devuelva sus tweets
+  def usuario_registrado?(user, iter)
+  salida = String.new
     begin
-      Twitter.user_timeline(user).first.text
+      iter.times do |n|
+        salida << ("- " + ORDEN[n] + " tweet: " +  Twitter.user_timeline(user)[n].text + "<br>")
+      end
+    salida 
     rescue
-      "El usuario introducido no está registrado en Twitter"
+      "ERROR: El usuario introducido no está registrado en Twitter o no tiene ningún tweet"
     end
   end
 end
