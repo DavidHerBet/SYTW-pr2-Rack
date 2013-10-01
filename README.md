@@ -18,15 +18,19 @@ Instrucciones
           config.oauth_token_secret = "YOUR_ACCESS_SECRET"
         end
 
-2. Se puede ejecutar el programa de forma manual para iniciar el servidor o mediante Rake:
+2. Se puede ejecutar el programa de forma manual (se le puede indicar servidor y puerto) o mediante Rake:
 
-        $ ruby muestra_tweets.rb
-        $ rake server
-        $ rake
+        $ ruby muestra_tweets.rb thin 6060
 
-3. Tras ejecutar el servidor habrá que ir a localhost:9292 (puerto asignado para la aplicación).
+        $ rake thin
 
-4. Una vez alli introducimos el usuario de Twitter y vemos su último tweet.
+        $ rake webrick
+
+3. Tras ejecutar el servidor habrá que ir a localhost en el puerto asignado para la aplicación (los servidores disponibles son thin y WEBrick). Ejemplo:
+
+        http://localhost:8080
+
+4. Una vez alli introducimos un usuario de Twitter y el número de tweets para ver sus últimos tweets.
    
 
 
