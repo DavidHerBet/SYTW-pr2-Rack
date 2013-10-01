@@ -67,11 +67,12 @@ class MuestraTweets
   end
 end
 
-servidor = ARGV.shift || 'thin'
-puerto = ARGV.shift || '9292'
-
-Rack::Server.start(
-  :app => MuestraTweets.new,
-  :Port => puerto,
-  :server => servidor
-)
+if $0 == __FILE__
+  servidor = ARGV.shift || 'thin'
+  puerto = ARGV.shift || '9292'
+  Rack::Server.start(
+    :app => MuestraTweets.new,
+    :Port => puerto,
+    :server => servidor
+  )
+end
