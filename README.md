@@ -22,7 +22,9 @@ Instrucciones
 
         $ ruby muestra_tweets.rb thin 6060
 
+
         $ rake thin
+
 
         $ rake webrick
 
@@ -30,9 +32,11 @@ Instrucciones
 
         http://localhost:8080
 
-4. Una vez alli introducimos un usuario de Twitter y el número de tweets para ver sus últimos tweets.
-   
+4. Una vez allí introducimos uno o varios usuarios de Twitter y el número de tweets (hasta un máximo de 3) para ver sus últimos tweets.
 
+**Notas:**
+- Si introduces más de 7 usuarios en la lista, con el máximo de tweets permitido, es posible que el tiempo de procesamiento de la petición exceda el límite que tenga establecido Twitter y la apliación falle, respondiendo que "Alguno de los usuarios introducidos no está registrado en Twitter o no tiene ningún tweet".   
+`Recomendación`: Introducir menos de 7 usuarios o disminuir el número de tweets.
 
 ---
 
